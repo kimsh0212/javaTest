@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:component-scan base-package="com.ksh" use-default-filters="true">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>
+    </context:component-scan>
+
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="objectMapper">
+                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                        <property name="serializationInclusion" value="NON_NULL"/>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+
+        <!-- client 요청 header 에서 sid 값을 가져와서 복호화 한 뒤에 user 정보를 조회 / sid 가 유효하지 않거나 user 정보가 없다면 anonymous 타입 이용자 정보 리턴 -->
+        <mvc:argument-resolvers>
+            <!--<bean class="com.titan.member.domain.account.web.resolver.UserArgumentResolver"/>-->
+            <!--<bean class="com.titan.common.paging.web.resolver.PagingArgumentResolver"/>-->
+        </mvc:argument-resolvers>
+
+    </mvc:annotation-driven>
+
+    <mvc:interceptors>
+    <mvc:interceptor>
+        <mvc:mapping path="/**"/>
+        <mvc:exclude-mapping path="/resources/**"/>
+        <bean class="com.ksh.common.interceptors.SimpleLoggingInterceptor" />
+    </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

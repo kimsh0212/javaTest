@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/tx
+						http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <!--<tx:annotation-driven transaction-manager="transactionManager" mode="proxy" proxy-target-class="true"/>-->
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="localDataSource"></property>
+    </bean>
+
+    <bean id="localDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${localDataSource.driverClassName}" />
+        <property name="url" value="${localDataSource.url}" />
+        <property name="username" value="${localDataSource.username}" />
+        <property name="password" value="${localDataSource.password}" />
+        <property name="initialSize" value="${localDataSource.initialSize}"/>
+        <property name="maxIdle" value="${localDataSource.maxIdle}"/>
+        <property name="minIdle" value="${localDataSource.minIdle}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${localDataSource.timeBetweenEvictionRunsMillis}"/>
+        <property name="connectionProperties" value="${localDataSource.connectionProperties}"/>
+    </bean>
+
+    <bean id="localSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="localDataSource" />
+        <property name="mapperLocations" value="classpath*:sqlMapper/**/*.xml" />
+        <property name="configLocation" value="classpath:/mybatis-config.xml" />
+    </bean>
+
+    <bean id="localdb" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+        <constructor-arg name="sqlSessionFactory" ref="localSqlSessionFactory" />
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+        <property name="serviceLocatorInterface" value="com.ksh.config.factory.SqlSessionTemplateDatabaseFactory"/>
+    </bean>
+</beans>

@@ -1,0 +1,91 @@
+group 'restfulApi'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+allprojects {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://mvnrepository.com/artifact"
+        }
+    }
+}
+
+def version = [
+        spring : "4.3.6.RELEASE"
+        , springDataCommons: "1.13.0.RELEASE"
+        , springDataJpa: "1.9.0.RELEASE"
+        , springDataRedis: "1.8.0.RELEASE"
+        , springSecurityCrypto : "4.2.1.RELEASE"
+        , slf4j: "1.7.21"
+        , servletApi: "3.0.1"
+        , logback: "1.1.7"
+        , mockito: "1.9.0"
+]
+dependencies {
+    compile "org.projectlombok:lombok:1.16.4",
+            "org.springframework:spring-webmvc:${version.spring}",
+            "org.springframework:spring-tx:${version.spring}",
+            "org.springframework:spring-oxm:${version.spring}",
+            "org.springframework:spring-core:${version.spring}",
+            "org.springframework:spring-context-support:${version.spring}",
+            "org.springframework.data:spring-data-commons:${version.springDataCommons}",
+            "org.springframework.data:spring-data-jpa:${version.springDataJpa}",
+            "org.springframework.data:spring-data-redis:${version.springDataRedis}",
+            "org.springframework:spring-aspects:4.1.7.RELEASE",
+            "org.springframework.security:spring-security-crypto:${version.springSecurityCrypto}",
+
+            "org.apache.httpcomponents:httpclient:4.5.2",
+            "commons-beanutils:commons-beanutils:1.9.3",
+
+            //logging
+            "ch.qos.logback:logback-classic:${version.logback}",
+            "ch.qos.logback:logback-core:${version.logback}",
+            "org.logback-extensions:logback-ext-spring:0.1.1",
+            "org.slf4j:slf4j-api:${version.slf4j}",
+
+            "org.apache.commons:commons-dbcp2:2.1.1",
+            "org.mybatis:mybatis:3.2.8",
+            "org.mybatis:mybatis-spring:1.2.2",
+            'cglib:cglib:3.1',
+
+            "org.apache.commons:commons-lang3:3.5",
+            "org.apache.commons:commons-collections4:4.1",
+            "org.apache.commons:commons-crypto:1.0.0",
+            "commons-collections:commons-collections:3.2.2",
+
+            "org.codehaus.jackson:jackson-mapper-asl:1.9.13",
+            "org.codehaus.jackson:jackson-core-asl:1.9.13",
+            "com.fasterxml.jackson.core:jackson-core:2.6.0",
+            "com.fasterxml.jackson.core:jackson-databind:2.5.4",
+
+            "com.google.guava:guava:23.0",
+            "javax.servlet:javax.servlet-api:${version.servletApi}",
+
+            //ehcache
+            "net.sf.ehcache:ehcache:2.9.0",
+
+            "org.hsqldb:hsqldb:2.3.4",
+            "org.mariadb.jdbc:mariadb-java-client:2.1.2"
+
+    compile files('src/main/resources/libs/sl-objectstorage.jar')
+    compile 'com.fasterxml.jackson.core:jackson-core:2.4.1'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1'
+
+    testCompile "org.springframework:spring-test:${version.spring}",
+            "org.mockito:mockito-core:${version.mockito}"
+
+    testCompile 'junit:junit:4.12',
+            "org.springframework:spring-test:${version.spring}",
+            "org.mockito:mockito-core:${version.mockito}"
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+test {
+    systemProperties "properties": "value"
+}

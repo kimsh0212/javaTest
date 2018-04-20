@@ -9,6 +9,7 @@
     </settings>
     <typeAliases>
         <typeAlias alias="Test" type="com.ksh.test.model.Test"/>
+        <typeAlias alias="ApiData" type="com.ksh.apimanage.model.ApiData"/>
     </typeAliases>
     <typeHandlers>
         <typeHandler javaType="java.sql.Timestamp" handler="org.apache.ibatis.type.DateTypeHandler" />

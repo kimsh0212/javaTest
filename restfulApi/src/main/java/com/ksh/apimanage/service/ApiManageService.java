@@ -5,7 +5,7 @@ import com.ksh.apimanage.model.ApiData;
 import com.ksh.apimanage.repository.ApiManageRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import com.ksh.util.ShUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,6 @@ public class ApiManageService {
 
     @Autowired
     private ApiManageRepository apiManageRepository;
-
     /**
      *
      * @param params
@@ -27,6 +26,7 @@ public class ApiManageService {
     public Map<String, Object> ApiAdd(Map<String, Object> params) throws Exception{
         Map<String, Object> resultMap = Maps.newHashMap();
         int result = 0;
+        String ss = ShUtil.testUtil();
         try{
             result = apiManageRepository.apiAddInsert(params);
         }catch(Exception e){

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="url">
+
+    <select id="selectUrlList" resultType="Url">
+      SELECT * FROM tb_url
+    </select>
+
+    <select id="selectUserUrlList" parameterType="map" resultType="Url">
+        SELECT
+          a.user_name AS urlUserNm
+        , a.user_id AS urlUserId
+        , b.url_name AS urlNm
+        , b.url_domain AS urlDomain
+        FROM tb_user AS a
+        JOIN tb_url AS b ON a.user_id = b.url_user_id
+        WHERE a.user_id = #{userId}
+    </select>
+</mapper>

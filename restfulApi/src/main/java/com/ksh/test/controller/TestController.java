@@ -30,4 +30,10 @@ public class TestController{
         result.put("data",timeInfo);
         return ResponseEntityUtil.getResponseData(result);
     }
+
+    @RequestMapping(value="/geoip", method = RequestMethod.GET)
+    public ResponseEntity<ApiResult> getGeoIp(HttpServletRequest http){
+        Map<String, Object> result = Maps.newHashMap();
+        return ResponseEntityUtil.getResponseData(result);
+    }
 }

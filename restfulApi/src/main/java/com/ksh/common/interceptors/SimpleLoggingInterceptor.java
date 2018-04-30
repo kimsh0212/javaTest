@@ -1,6 +1,7 @@
 package com.ksh.common.interceptors;
 
 import com.google.common.collect.Maps;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.web.method.HandlerMethod;
@@ -19,6 +20,7 @@ import java.util.Map;
  * Created by user on 2017-03-02.
  */
 @Slf4j
+
 public class SimpleLoggingInterceptor implements HandlerInterceptor {
 
     @Override
